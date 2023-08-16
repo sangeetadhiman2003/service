@@ -1,0 +1,112 @@
+package all_service_here;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.awt.event.ActionEvent;
+
+public class deleteprofile extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField uname;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					deleteprofile frame = new deleteprofile();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public deleteprofile() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 128, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 255, 255));
+		panel.setBounds(0, 11, 434, 34);
+		contentPane.add(panel);
+		
+		JLabel lblNewLabel = new JLabel("Delete Profile from 'All Service Here'");
+		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		panel.add(lblNewLabel);
+		JLabel lblNewLabel_1 = new JLabel("User name");
+		lblNewLabel_1.setFont(new Font("Rockwell", Font.PLAIN, 17));
+		lblNewLabel_1.setBounds(43, 74, 105, 27);
+		contentPane.add(lblNewLabel_1);
+		
+		uname = new JTextField();
+		uname.setBounds(180, 74, 194, 40);
+		contentPane.add(uname);
+		uname.setColumns(10);
+		
+		JButton delete = new JButton("Delete");
+		delete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String username=uname.getText();
+				if(username.equals(""))
+				{
+					JOptionPane.showMessageDialog(null,"Please enter username");
+				}
+				else {
+				int opt=JOptionPane.showConfirmDialog(null, "Are you sure to delete","delete",JOptionPane.YES_NO_OPTION);
+				if(opt==0) {
+				try
+				{
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project","root","shalu");
+					String query = "delete from Provider where usern=?";
+					PreparedStatement ps = con.prepareStatement(query);
+					ps.setString(1, username);
+				    ps.executeUpdate();
+				    JOptionPane.showMessageDialog(null,"Record Deleted...Thanks For using 'All Service Here'");
+				}
+				catch(Exception e1)
+				{
+					e1.printStackTrace();
+				}
+				}
+				}
+			
+			}
+		});
+		delete.setBackground(new Color(0, 255, 255));
+		delete.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		delete.setBounds(157, 142, 99, 40);
+		contentPane.add(delete);
+		setVisible(true);
+		
+		
+	}
+}

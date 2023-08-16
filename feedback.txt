@@ -1,0 +1,161 @@
+package all_service_here;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.JTextArea;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.awt.event.ActionEvent;
+
+public class feedback extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField rate;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					feedback frame = new feedback();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public feedback() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 346);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 128, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 255, 255));
+		panel.setBounds(0, 11, 434, 34);
+		contentPane.add(panel);
+		
+		JLabel lblNewLabel = new JLabel("This is feedback form");
+		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		panel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Give Rating");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_1.setBounds(10, 69, 91, 34);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Are you happy from this application");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_2.setBounds(10, 114, 265, 26);
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("Any Advice -:");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_3.setBounds(10, 166, 97, 26);
+		contentPane.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_4 = new JLabel("Thanks for using 'All Service Here' ");
+		lblNewLabel_4.setFont(new Font("Sylfaen", Font.PLAIN, 19));
+		lblNewLabel_4.setBounds(64, 236, 293, 25);
+		contentPane.add(lblNewLabel_4);
+		
+		JTextArea advice = new JTextArea();
+		advice.setBounds(117, 169, 281, 46);
+		contentPane.add(advice);
+		
+		JRadioButton rbyes = new JRadioButton("Yes");
+		rbyes.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		rbyes.setBounds(281, 118, 57, 23);
+		contentPane.add(rbyes);
+		
+		JRadioButton rbno = new JRadioButton("No");
+		rbno.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		rbno.setBounds(346, 118, 44, 23);
+		contentPane.add(rbno);
+		
+		rate = new JTextField();
+		rate.setBounds(111, 75, 86, 28);
+		contentPane.add(rate);
+		rate.setColumns(10);
+		
+		JLabel lblNewLabel_5 = new JLabel("(Good,Better,Best)");
+		lblNewLabel_5.setBounds(207, 81, 114, 14);
+		contentPane.add(lblNewLabel_5);
+		
+		JButton done = new JButton("Done (thankyou)");
+		done.setBackground(new Color(0, 255, 255));
+		done.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String rating=rate.getText();
+				String feedback=advice.getText();
+				if(rating.equals(""))
+				{
+					JOptionPane.showMessageDialog(null,"Please enter Rating");
+				}
+			   else if(feedback.equals(""))
+				{
+					JOptionPane.showMessageDialog(null,"Please enter Advice");
+				}
+			   else if((!rbno.isSelected()) &&(!rbyes.isSelected()))
+				{
+					JOptionPane.showMessageDialog(null, "Please Select happy or not ");
+				}
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project","root","shalu");
+					String query = "insert into feedback(rating,enjoyable,advice)values(?,?,?) ";
+					PreparedStatement ps = con.prepareStatement(query);
+					ps.setString(1,rating);
+					ps.setString(3, feedback);
+					
+					if(rbno.isSelected())
+					{
+						ps.setString(2, rbno.getText());
+					}
+					else
+					{
+						ps.setString(2, rbyes.getText());
+					}
+					if((!(rating.equals(""))) && (!(feedback.equals("")))&&(rbno.isSelected()) ||(rbyes.isSelected()))
+					{
+
+						int i=ps.executeUpdate();
+						JOptionPane.showMessageDialog(done,i+" Record added Successfully");
+					}
+					
+				}catch(Exception e1)
+				{
+					e1.printStackTrace();
+				}
+			}
+		});
+		done.setFont(new Font("Script MT Bold", Font.PLAIN, 16));
+		done.setBounds(117, 262, 171, 34);
+		contentPane.add(done);
+		setVisible(true);
+	}
+}

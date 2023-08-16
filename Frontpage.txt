@@ -1,0 +1,81 @@
+package all_service_here;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class FrontPage extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FrontPage frame = new FrontPage();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public FrontPage() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 128, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 255, 255));
+		panel.setBounds(10, 11, 414, 34);
+		contentPane.add(panel);
+		
+		JLabel lblNewLabel = new JLabel("Welcome to 'All Service Here'");
+		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		panel.add(lblNewLabel);
+		
+		JButton register = new JButton("Register");
+		register.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new registration();
+			}
+		});
+		register.setBackground(new Color(0, 255, 255));
+		register.setFont(new Font("Sitka Text", Font.PLAIN, 23));
+		register.setBounds(138, 84, 155, 44);
+		contentPane.add(register);
+		
+		JButton login =  new JButton("Login");
+		login.setBackground(new Color(0, 255, 255));
+		login.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new registration();
+			}
+		});
+		login.setFont(new Font("Sitka Heading", Font.PLAIN, 26));
+		login.setBounds(138, 158, 155, 38);
+		contentPane.add(login);
+		setVisible(true);
+	}
+
+}

@@ -1,0 +1,172 @@
+package all_service_here;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTextField;
+import javax.swing.JTextArea;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.awt.event.ActionEvent;
+
+public class updateSeeker extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField fname;
+	private JTextField lname;
+	private JTextField cn;
+	private JTextField cr;
+	private JTextField us;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					updateSeeker frame = new updateSeeker();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public updateSeeker() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 128, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 255, 255));
+		panel.setBounds(10, 23, 414, 38);
+		getContentPane().add(panel);
+		
+		JLabel lblNewLabel = new JLabel("Update Records");
+		lblNewLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 22));
+		panel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("First name");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(10, 85, 92, 14);
+		getContentPane().add(lblNewLabel_1);
+		
+		JLabel s = new JLabel("Last name");
+		s.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		s.setBounds(10, 129, 78, 14);
+		getContentPane().add(s);
+		
+		JLabel lblNewLabel_2 = new JLabel("Address");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_2.setBounds(199, 87, 65, 14);
+		getContentPane().add(lblNewLabel_2);
+		
+		fname = new JTextField();
+		fname.setBounds(87, 84, 86, 20);
+		contentPane.add(fname);
+		fname.setColumns(10);
+		
+		lname = new JTextField();
+		lname.setBounds(87, 128, 86, 20);
+		contentPane.add(lname);
+		lname.setColumns(10);
+		
+		JTextArea loc = new JTextArea();
+		loc.setBounds(258, 82, 166, 38);
+		contentPane.add(loc);
+		
+		JLabel lblNewLabel_5 = new JLabel("Contact No.");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_5.setBounds(199, 181, 78, 14);
+		getContentPane().add(lblNewLabel_5);
+		
+		cn = new JTextField();
+		cn.setBounds(305, 180, 105, 20);
+		contentPane.add(cn);
+		cn.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("Crime record");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_3.setBounds(199, 142, 92, 14);
+		contentPane.add(lblNewLabel_3);
+		
+		cr = new JTextField();
+		cr.setBounds(355, 141, 55, 20);
+		contentPane.add(cr);
+		cr.setColumns(10);
+		
+		JLabel lblNewLabel_4 = new JLabel("User name");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_4.setBounds(10, 183, 78, 14);
+		contentPane.add(lblNewLabel_4);
+		
+		us = new JTextField();
+		us.setBounds(87, 180, 86, 20);
+		contentPane.add(us);
+		us.setColumns(10);
+		
+		
+		JButton btnNewButton = new JButton("Update");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/project","root","shalu");
+					String query = "update register set fname='"+fname.getText()+"',lname='"+lname.getText()+"',address='"+loc.getText()+"',contact_no='"+cn.getText()+"',uname='"+us.getText()+"' where uname='"+us.getText()+"'";
+					if(fname.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter First name");
+					}
+					else if(lname.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter Last name");
+					}
+					else if(loc.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter Address");
+					}
+					
+					else if(cn.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter Contact No");
+					}
+					else if(!(cn.getText().length()==10))
+					{
+						JOptionPane.showMessageDialog(null,"Please enter correct Contact No");
+					}
+					PreparedStatement ps = c.prepareStatement(query);
+					if((!(fname.getText().equals(""))) &&((cn.getText().length()==10)) && (!(lname.getText().equals(""))) && (!(loc.getText().equals("")))  &&(!(cn.getText().equals(""))))
+					{ 
+						ps.execute();
+					   JOptionPane.showMessageDialog(null, "Record update succesfullly");
+			    	}
+					ps.close();
+				}
+				catch(Exception e1){
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton.setBackground(new Color(0, 255, 255));
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnNewButton.setBounds(148, 219, 116, 31);
+		contentPane.add(btnNewButton);
+		setVisible(true);
+		
+		
+	}
+}

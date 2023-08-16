@@ -1,0 +1,287 @@
+package all_service_here;
+
+import java.awt.EventQueue;
+
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JTextArea;
+import javax.swing.JRadioButton;
+import javax.swing.JPasswordField;
+import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.awt.event.ActionEvent;
+
+public class FirstPage extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField us;
+	private JPasswordField passwordField;
+	private JPasswordField password;
+	private JPasswordField repassword;
+	private JLabel Repss;
+	private JLabel adder;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FirstPage frame = new FirstPage();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public FirstPage() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 323);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 128, 255));
+		contentPane.setBorder(new EmptyBorder(45, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 255, 255));
+		panel.setBounds(0, 11, 434, 34);
+		contentPane.add(panel);
+		
+		JLabel lblNewLabel = new JLabel("Welcome to Registration page");
+		panel.add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		
+		JLabel fn = new JLabel("Name");
+		fn.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		fn.setBounds(10, 61, 46, 14);
+		contentPane.add(fn);
+		
+		JLabel ln = new JLabel("Last name");
+		ln.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		ln.setBounds(10, 100, 78, 14);
+		contentPane.add(ln);
+		
+		JTextField fname = new JTextField();
+		fname.setBounds(81, 59, 86, 20);
+		contentPane.add(fname);
+		fname.setColumns(10);
+		
+		JTextField lname = new JTextField();
+		lname.setBounds(91, 98, 109, 20);
+		contentPane.add(lname);
+		lname.setColumns(10);
+		
+		JLabel gen = new JLabel("Gender");
+		gen.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		gen.setBounds(10, 125, 46, 45);
+		contentPane.add(gen);
+		
+		JRadioButton male = new JRadioButton("Male");
+		male.setBounds(70, 137, 62, 23);
+		contentPane.add(male);
+		
+		JRadioButton female = new JRadioButton("Female");
+		female.setBounds(147, 137, 73, 23);
+		contentPane.add(female);
+		
+		JLabel name = new JLabel("UserName");
+		name.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		name.setBounds(10, 184, 78, 14);
+		contentPane.add(name);
+		
+		us = new JTextField();
+		us.setBounds(102, 182, 86, 20);
+		contentPane.add(us);
+		us.setColumns(10);
+		
+		JLabel cn = new JLabel("Contact No");
+		cn.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		cn.setBounds(213, 184, 80, 14);
+		contentPane.add(cn);
+		
+		JTextField en = new JTextField();
+		en.setBounds(318, 182, 106, 20);
+		contentPane.add(en);
+		en.setColumns(10);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(117, 216, -39, 17);
+		contentPane.add(passwordField);
+		
+		adder = new JLabel("Address\r\n");
+		adder.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		adder.setBounds(194, 61, 63, 14);
+		contentPane.add(adder);
+		
+		JTextArea add = new JTextArea();
+		add.setBounds(267, 57, 157, 41);
+		contentPane.add(add);
+		
+		JLabel pss = new JLabel("Password\r\n");
+		pss.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		pss.setBounds(20, 219, 62, 14);
+		contentPane.add(pss);
+		
+		Repss = new JLabel("Confirm password");
+		Repss.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		Repss.setBounds(198, 216, 113, 17);
+		contentPane.add(Repss);
+		
+		password = new JPasswordField();
+		password.setBounds(102, 216, 86, 20);
+		contentPane.add(password);
+		
+		repassword = new JPasswordField();
+		repassword.setBounds(322, 213, 102, 20);
+		contentPane.add(repassword);
+		
+		JLabel crecord = new JLabel("Crime Record");
+		crecord.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		crecord.setBounds(225, 114, 86, 20);
+		contentPane.add(crecord);
+		
+		JRadioButton rbyes = new JRadioButton("Yes");
+		rbyes.setBounds(314, 114, 52, 23);
+		contentPane.add(rbyes);
+		
+		JRadioButton rbno = new JRadioButton("No");
+		rbno.setBounds(318, 142, 58, 23);
+		contentPane.add(rbno);
+		
+		JButton submit = new JButton("Submit");
+		submit.setFont(new Font("Sitka Text", Font.PLAIN, 17));
+		submit.setBounds(147, 244, 110, 29);
+		submit.setForeground(new Color(0, 0, 0));
+		submit.setBackground(new Color(0, 255, 255));
+		submit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String firstname=fname.getText();
+				String lastname=lname.getText();
+				String address=add.getText();
+				String contact=en.getText();
+				String username=us.getText();
+				String pass=password.getText();
+				String repass=repassword.getText();
+				if(!(pass.equals(repass)))
+				{
+					JOptionPane.showMessageDialog(null, "Please enter correct password");
+				}
+				
+				if(firstname.equals(""))
+				{
+					JOptionPane.showMessageDialog(null,"Please enter First name");
+				}
+			   else if(lastname.equals(""))
+				{
+					JOptionPane.showMessageDialog(null,"Please enter Last tname");
+				}
+			   else if(address.equals(""))
+				{
+					JOptionPane.showMessageDialog(null,"Please enter Address");
+				}
+			   else if(contact.equals(""))
+				{
+					JOptionPane.showMessageDialog(null,"Please enter Contact no");
+				}
+			   else if(!(contact.length()==10))
+				{
+					JOptionPane.showMessageDialog(null,"Please enter correct Contact No");
+				}
+			   else if(username.equals(""))
+				{
+					JOptionPane.showMessageDialog(null,"Please enter Username");
+				}
+			   else if(pass.equals(""))
+				{
+					JOptionPane.showMessageDialog(null,"Please enter Password");
+				}
+			   else if(repass.equals(""))
+				{
+					JOptionPane.showMessageDialog(null,"Please enter Confirm password");
+				}
+			   else if((!rbno.isSelected()) &&(!rbyes.isSelected()))
+				{
+					JOptionPane.showMessageDialog(null, "Please Select crime record ");
+				}
+			   else if((!male.isSelected()) &&(!female.isSelected()))
+				{
+					JOptionPane.showMessageDialog(null, "Please Select Gender");
+				}
+		
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project","root","shalu");
+					String query = "insert into register(fname,lname,address,contact_no,gen,crec,uname,password)values(?,?,?,?,?,?,?,?) ";
+					PreparedStatement ps = con.prepareStatement(query);
+					ps.setString(1,firstname);
+					ps.setString(2, lastname);
+					ps.setString(3, address);
+					ps.setString(4, contact);
+					if(male.isSelected())
+					{	
+						ps.setString(5, male.getText());
+					}
+					else
+					{
+						ps.setString(5,female.getText());
+					}
+					
+					if(rbno.isSelected())
+					{
+						ps.setString(6, rbno.getText());
+					}
+					else
+					{
+						ps.setString(6, rbyes.getText());
+					}
+					ps.setString(7, username);
+					ps.setString(8, pass);
+					
+					if((!(firstname.equals("")))&&(male.isSelected())||(female.isSelected())&& (contact.length()==10)&&((rbno.isSelected())||(rbyes.isSelected())) &&(pass.equals(repass)) && (!(lastname.equals(""))) && (!(address.equals(""))) && (!(contact.equals(""))) && (!(username.equals(""))))
+					{
+						int i=ps.executeUpdate();
+						JOptionPane.showMessageDialog(submit,i+" Record added Successfully");
+					
+					}
+					
+					ps.close();
+					con.close();
+
+				}
+					
+				catch(Exception e1)
+				{
+					e1.printStackTrace();
+				}
+				if((!(firstname.equals(""))) &&(contact.length()==10)&&(male.isSelected())||(female.isSelected())&&((rbno.isSelected())||(rbyes.isSelected()))&& (pass.equals(repass))&&(!(lastname.equals(""))) && (!(address.equals(""))) && (!(contact.equals(""))) && (!(username.equals(""))))
+				{
+					new Login();
+				}
+				
+			}
+		
+			
+		});
+		contentPane.add(submit);
+		setVisible(true);
+	}
+}

@@ -1,0 +1,184 @@
+package all_service_here;
+
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.awt.event.ActionEvent;
+
+public class updateprofile extends JFrame {
+	private JTextField fname;
+	private JTextField lname;
+	private JTextField ex;
+	private JTextField ch;
+	private JTextField cn;
+	private JTextField us;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					updateprofile frame = new updateprofile();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public updateprofile() {
+		getContentPane().setBackground(new Color(255, 128, 255));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 334);
+		getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 255, 255));
+		panel.setBounds(10, 23, 414, 38);
+		getContentPane().add(panel);
+		
+		JLabel lblNewLabel = new JLabel("Update Records");
+		lblNewLabel.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 22));
+		panel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("First name");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(10, 85, 92, 14);
+		getContentPane().add(lblNewLabel_1);
+		
+		JLabel s = new JLabel("Last name");
+		s.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		s.setBounds(10, 129, 78, 14);
+		getContentPane().add(s);
+		
+		JLabel lblNewLabel_2 = new JLabel("Address");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_2.setBounds(199, 87, 65, 14);
+		getContentPane().add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("Experience");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_3.setBounds(10, 203, 78, 20);
+		getContentPane().add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_4 = new JLabel("charge");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_4.setBounds(210, 199, 57, 29);
+		getContentPane().add(lblNewLabel_4);
+		
+		fname = new JTextField();
+		fname.setBounds(96, 84, 86, 20);
+		getContentPane().add(fname);
+		fname.setColumns(10);
+		
+		lname = new JTextField();
+		lname.setBounds(96, 128, 86, 20);
+		getContentPane().add(lname);
+		lname.setColumns(10);
+		
+		ex = new JTextField();
+		ex.setBounds(96, 205, 86, 20);
+		getContentPane().add(ex);
+		ex.setColumns(10);
+		
+		ch = new JTextField();
+		ch.setBounds(292, 205, 86, 20);
+		getContentPane().add(ch);
+		ch.setColumns(10);
+		
+		JTextArea add = new JTextArea();
+		add.setBounds(257, 85, 151, 47);
+		getContentPane().add(add);
+		
+		JLabel lblNewLabel_5 = new JLabel("Contact No.");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_5.setBounds(199, 160, 78, 14);
+		getContentPane().add(lblNewLabel_5);
+		
+		cn = new JTextField();
+		cn.setBounds(292, 159, 132, 20);
+		getContentPane().add(cn);
+		cn.setColumns(10);
+		
+		JLabel lblNewLabel_6 = new JLabel("User name");
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_6.setBounds(10, 173, 78, 14);
+		getContentPane().add(lblNewLabel_6);
+		
+		us = new JTextField();
+		us.setBounds(96, 174, 86, 20);
+		getContentPane().add(us);
+		us.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Update");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//String username=us.getText();
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/project","root","shalu");
+					String query = "update Provider set firstname='"+fname.getText()+"',lastname='"+lname.getText()+"',loc='"+add.getText()+"',contNo='"+cn.getText()+"',usern='"+us.getText()+"',experience='"+ex.getText()+"',charge='"+ch.getText()+"' where usern='"+us.getText()+"'";
+					if(fname.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter First name");
+					}
+					else if(lname.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter Last name");
+					}
+					else if(add.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter Address");
+					}
+					else if(ex.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter Experience");
+					}
+					else if(ch.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter charge");
+					}
+					else if(cn.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter Contact No");
+					}
+					else if(!(cn.getText().length()==10))
+					{
+						JOptionPane.showMessageDialog(null,"Please enter correct Contact No");
+					}
+					PreparedStatement ps = c.prepareStatement(query);
+					if((!(fname.getText().equals(""))) &&((cn.getText().length()==10)) && (!(lname.getText().equals(""))) && (!(add.getText().equals(""))) && (!(ch.getText().equals(""))) && (!(ex.getText().equals(""))) &&(!(cn.getText().equals(""))))
+					{ 
+						ps.execute();
+					   JOptionPane.showMessageDialog(null, "Record update succesfullly");
+			    	}
+					ps.close();}catch(Exception e1){
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton.setBackground(new Color(0, 255, 255));
+		btnNewButton.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+		btnNewButton.setBounds(156, 239, 132, 29);
+		getContentPane().add(btnNewButton);
+		
+	
+		setVisible(true);
+
+	}
+}

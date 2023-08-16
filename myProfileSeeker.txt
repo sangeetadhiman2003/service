@@ -1,0 +1,106 @@
+package all_service_here;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class seekerProfile extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					seekerProfile frame = new seekerProfile();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public seekerProfile() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 332);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 128, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 0, 0));
+		panel.setBounds(115, 0, 197, 44);
+		contentPane.add(panel);
+		
+		JLabel lblNewLabel = new JLabel("My Profile");
+		lblNewLabel.setFont(new Font("Rockwell", Font.PLAIN, 24));
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		panel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Do you want to delete or update profile");
+		lblNewLabel_1.setBounds(20, 62, 357, 23);
+		contentPane.add(lblNewLabel_1);
+		lblNewLabel_1.setFont(new Font("Sitka Text", Font.PLAIN, 18));
+		
+		JLabel lblNewLabel_2 = new JLabel("\tchoose any one -:");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_2.setBounds(20, 96, 140, 14);
+		contentPane.add(lblNewLabel_2);
+		
+		JButton btnNewButton = new JButton("View");
+		btnNewButton.setBackground(new Color(0, 255, 255));
+		btnNewButton.setFont(new Font("Sitka Text", Font.PLAIN, 30));
+		btnNewButton.setBounds(143, 107, 116, 32);
+		contentPane.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Update");
+		btnNewButton_1.setBackground(new Color(0, 255, 255));
+		btnNewButton_1.setFont(new Font("Sitka Text", Font.PLAIN, 24));
+		btnNewButton_1.setBounds(143, 150, 116, 32);
+		contentPane.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("Search Service");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Search();
+			}
+		});
+		btnNewButton_2.setBackground(new Color(0, 255, 255));
+		btnNewButton_2.setFont(new Font("Sitka Text", Font.PLAIN, 22));
+		btnNewButton_2.setBounds(115, 193, 197, 32);
+		contentPane.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("Delete");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new deleteSeeker();
+			}
+		});
+		btnNewButton_3.setFont(new Font("Sitka Text", Font.PLAIN, 22));
+		btnNewButton_3.setBackground(new Color(0, 255, 255));
+		btnNewButton_3.setBounds(143, 245, 116, 37);
+		contentPane.add(btnNewButton_3);
+		setVisible(true);
+		
+		
+	}
+
+}

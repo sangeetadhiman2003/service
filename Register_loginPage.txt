@@ -1,0 +1,120 @@
+package all_service_here;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JRadioButton;
+import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class registration extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					registration frame = new registration();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public registration() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 128, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Register/Login as a service provider or seeker -:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel.setBounds(10, 11, 367, 31);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Choose Any One");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(10, 55, 115, 20);
+		contentPane.add(lblNewLabel_1);
+		
+		JRadioButton seeker = new JRadioButton("Service Seeker");
+		seeker.setFont(new Font("Sitka Text", Font.PLAIN, 15));
+		seeker.setBounds(108, 93, 154, 31);
+		contentPane.add(seeker);
+		
+		JRadioButton provider = new JRadioButton("Service Provider");
+		provider.setFont(new Font("Sitka Text", Font.PLAIN, 15));
+		provider.setBounds(108, 145, 154, 31);
+		contentPane.add(provider);
+		
+		JButton btnNewButton = new JButton("Register");
+		btnNewButton.setBackground(new Color(128, 255, 255));
+		btnNewButton.setForeground(new Color(64, 0, 64));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if((!(seeker.isSelected()))&& (!(provider.isSelected())))
+				{
+					JOptionPane.showMessageDialog(null, "Please select any one");
+				}
+				else if(((seeker.isSelected()))&& ((provider.isSelected())))
+				{
+					new registration();
+				}
+				else if(seeker.isSelected()) {
+					new FirstPage();
+				}
+				else
+				{
+					new Regpro();
+				}
+				
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
+		btnNewButton.setBounds(37, 202, 124, 31);
+		contentPane.add(btnNewButton);
+		
+		JButton login = new JButton("Login");
+		login.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(((seeker.isSelected()))&& ((provider.isSelected())))
+				{
+					new registration();
+				}
+				else if(seeker.isSelected()) {
+					new Login();
+				}
+				else
+				{
+					new loginPro();
+				}
+			}
+		});
+		login.setBackground(new Color(128, 255, 255));
+		login.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
+		login.setBounds(253, 202, 99, 31);
+		contentPane.add(login);
+		setVisible(true);
+	}
+}

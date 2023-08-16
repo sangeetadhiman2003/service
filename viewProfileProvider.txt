@@ -1,0 +1,278 @@
+package all_service_here;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class viewProfile extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField fname;
+	private JTextField lname;
+	private JTextField cn;
+	private JTextField ex;
+	private JTextField ch;
+	private JTextField sername;
+	private JPasswordField p;
+	private JPasswordField r;
+	private JTextField cr;
+	private JTextField gen;
+	private JTextField us;
+	private JTextField user;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					viewProfile frame = new viewProfile();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public viewProfile() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 417, 336);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 128, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		JLabel lblNewLabel_1 = new JLabel("First name");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_1.setBounds(10, 62, 65, 14);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Last name");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_2.setBounds(215, 62, 75, 14);
+		contentPane.add(lblNewLabel_2);
+		
+		
+		
+		JLabel lblNewLabel_3 = new JLabel("Address");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_3.setBounds(196, 105, 54, 14);
+		contentPane.add(lblNewLabel_3);
+		
+		JTextArea aaa = new JTextArea();
+		aaa.setBounds(260, 101, 148, 34);
+		contentPane.add(aaa);
+		
+		JLabel lblNewLabel_4 = new JLabel("Contact No");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_4.setBounds(10, 145, 75, 20);
+		contentPane.add(lblNewLabel_4);
+		
+		
+		
+		JLabel lblNewLabel_5 = new JLabel("Gender");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_5.setBounds(204, 265, 46, 14);
+		contentPane.add(lblNewLabel_5);
+		
+		JLabel lblNewLabel_6 = new JLabel("Experience");
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_6.setBounds(10, 176, 75, 20);
+		contentPane.add(lblNewLabel_6);
+		
+		
+		
+		JLabel lblNewLabel_7 = new JLabel("charge");
+		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_7.setBounds(204, 148, 46, 14);
+		contentPane.add(lblNewLabel_7);
+		
+		
+		
+		JLabel lblNewLabel_9 = new JLabel("Service name");
+		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_9.setBounds(196, 179, 86, 14);
+		contentPane.add(lblNewLabel_9);
+		
+		
+		JLabel lblNewLabel_10 = new JLabel("Password");
+		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_10.setBounds(10, 218, 75, 22);
+		contentPane.add(lblNewLabel_10);
+		
+		JLabel lblNewLabel_11 = new JLabel("Re-Type");
+		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_11.setBounds(196, 220, 65, 18);
+		contentPane.add(lblNewLabel_11);
+		
+		JLabel lblNewLabel_12 = new JLabel("Crime record");
+		lblNewLabel_12.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_12.setBounds(10, 265, 93, 14);
+		contentPane.add(lblNewLabel_12);
+		
+		fname = new JTextField();
+		fname.setBounds(83, 60, 86, 20);
+		contentPane.add(fname);
+		fname.setColumns(10);
+		
+		lname = new JTextField();
+		lname.setBounds(301, 60, 86, 20);
+		contentPane.add(lname);
+		lname.setColumns(10);
+		
+		cn = new JTextField();
+		cn.setBounds(86, 146, 86, 20);
+		contentPane.add(cn);
+		cn.setColumns(10);
+		
+		ex = new JTextField();
+		ex.setBounds(83, 177, 86, 20);
+		contentPane.add(ex);
+		ex.setColumns(10);
+		
+		ch = new JTextField();
+		ch.setBounds(275, 146, 86, 20);
+		contentPane.add(ch);
+		ch.setColumns(10);
+		
+		sername = new JTextField();
+		sername.setBounds(301, 177, 86, 20);
+		contentPane.add(sername);
+		sername.setColumns(10);
+		
+		p = new JPasswordField();
+		p.setBounds(83, 220, 93, 20);
+		contentPane.add(p);
+		
+		r = new JPasswordField();
+		r.setBounds(288, 220, 99, 20);
+		contentPane.add(r);
+		
+		cr = new JTextField();
+		cr.setBounds(119, 263, 50, 20);
+		contentPane.add(cr);
+		cr.setColumns(10);
+		
+		gen = new JTextField();
+		gen.setBounds(275, 263, 86, 20);
+		contentPane.add(gen);
+		gen.setColumns(10);
+		
+		JLabel lblNewLabel_8 = new JLabel("user name");
+		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_8.setBounds(10, 105, 65, 14);
+		contentPane.add(lblNewLabel_8);
+		
+		us = new JTextField();
+		us.setBounds(83, 103, 86, 20);
+		contentPane.add(us);
+		us.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("User name");
+		lblNewLabel.setFont(new Font("Sitka Text", Font.PLAIN, 27));
+		lblNewLabel.setBounds(10, 25, 159, 20);
+		contentPane.add(lblNewLabel);
+		
+		JButton btnNewButton = new JButton("View");
+		btnNewButton.setForeground(new Color(255, 255, 255));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String username=user.getText();
+				if(username.equals(""))
+				{
+					JOptionPane.showMessageDialog(null, "Please Enter user Name");
+				}
+				else {
+				try {
+					
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project","root","shalu");
+					String query = "select firstname,lastname,experience,charge,contNo,loc,crime,gender,usern,servicename,pass,repass from Provider where usern=?";
+					PreparedStatement ps = con.prepareStatement(query);
+					ps.setString(1, username);
+					ResultSet rs=ps.executeQuery();
+					if(rs.next()==true)
+					{
+						fname.setText(rs.getString("firstname"));
+						lname.setText(rs.getString("lastname"));
+						ex.setText(rs.getString("experience"));
+						ch.setText(rs.getString("charge"));
+						cn.setText(rs.getString("contNo"));
+						aaa.setText(rs.getString("loc"));
+						p.setText(rs.getString("pass"));
+						r.setText(rs.getString("repass"));
+						cr.setText(rs.getString("crime"));
+						gen.setText(rs.getString("gender"));
+						sername.setText(rs.getString("servicename"));
+						us.setText(rs.getString("usern"));
+						
+						
+						
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Sorry data not found");
+						fname.setText("");
+						lname.setText("");
+						ex.setText("");
+						ch.setText("");
+						cn.setText("");
+						aaa.setText("");
+						p.setText("");
+						r.setText("");
+						cr.setText("");
+						gen.setText("");
+						sername.setText("");
+						us.setText("");
+						//servicename.requestFocus();
+						
+						
+					}
+				}catch(Exception e1)
+				{
+					e1.printStackTrace();
+				}
+				}
+			}
+		});
+		btnNewButton.setBackground(new Color(0, 0, 0));
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnNewButton.setBounds(319, 24, 72, 23);
+		contentPane.add(btnNewButton);
+		
+		user = new JTextField();
+		user.setBounds(164, 25, 145, 20);
+		contentPane.add(user);
+		user.setColumns(10);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 255, 255));
+		panel.setBounds(0, 11, 408, 40);
+		contentPane.add(panel);
+		setVisible(true);
+		
+	}
+}

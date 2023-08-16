@@ -1,0 +1,227 @@
+package all_service_here;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
+import javax.swing.JTextArea;
+
+public class Search extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField sername;
+	private JTextField fname;
+	private JTextField ex;
+	private JTextField ch;
+	private JTextField cn;
+	private JTextField add;
+	private JTextField lname;
+
+	/**
+	 * Launch the application.
+	 * 
+	 */
+	int count=0;
+	public static void main(String[] args) {
+	
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Search frame = new Search();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Search() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 341);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 128, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 255, 255));
+		panel.setBounds(20, 11, 375, 48);
+		contentPane.add(panel);
+		
+		JLabel lblNewLabel = new JLabel("Search for Service");
+		panel.add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 29));
+		
+		JLabel lblNewLabel_1 = new JLabel("Service Name");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_1.setBounds(10, 70, 114, 31);
+		contentPane.add(lblNewLabel_1);
+		
+		sername = new JTextField();
+		sername.setBounds(111, 77, 163, 24);
+		contentPane.add(sername);
+		sername.setColumns(10);
+		
+		
+		JLabel lblNewLabel_2 = new JLabel("First name");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_2.setBounds(10, 126, 96, 14);
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("Experience");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_3.setBounds(10, 182, 96, 37);
+		contentPane.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_4 = new JLabel("Charge");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_4.setBounds(10, 226, 66, 24);
+		contentPane.add(lblNewLabel_4);
+		
+		fname = new JTextField();
+		fname.setBounds(91, 125, 154, 20);
+		contentPane.add(fname);
+		fname.setColumns(10);
+		
+		ex = new JTextField();
+		ex.setBounds(86, 192, 159, 20);
+		contentPane.add(ex);
+		ex.setColumns(10);
+		
+		ch = new JTextField();
+		ch.setBounds(86, 230, 159, 20);
+		contentPane.add(ch);
+		ch.setColumns(10);
+		
+		JLabel lblNewLabel_5 = new JLabel("contact no");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_5.setBounds(291, 126, 86, 14);
+		contentPane.add(lblNewLabel_5);
+		
+		cn = new JTextField();
+		cn.setBounds(294, 151, 114, 20);
+		contentPane.add(cn);
+		cn.setColumns(10);
+		
+		JLabel address = new JLabel("Address");
+		address.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		address.setBounds(294, 193, 60, 14);
+		contentPane.add(address);
+		
+		
+		
+		JLabel last = new JLabel("Last name");
+		last.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		last.setBounds(10, 157, 77, 14);
+		contentPane.add(last);
+		
+		lname = new JTextField();
+		lname.setBounds(91, 156, 154, 20);
+		contentPane.add(lname);
+		lname.setColumns(10);
+		
+		JTextArea aaa = new JTextArea();
+		aaa.setBounds(283, 213, 125, 37);
+		contentPane.add(aaa);
+		JButton btnNewButton = new JButton("Search");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String servicename=sername.getText();
+				if(servicename.equals(""))
+				{
+					JOptionPane.showMessageDialog(null, "Please Enter Service Name");
+				}
+				else {
+				try {
+					
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/project","root","shalu");
+					String query = "select firstname,lastname,experience,charge,contNo,loc,usern from Provider where servicename=?";
+					PreparedStatement ps = con.prepareStatement(query);
+					ps.setString(1, servicename);
+					ResultSet rs=ps.executeQuery();
+					if(rs.next()==true)
+					{
+						fname.setText(rs.getString("firstname"));
+						lname.setText(rs.getString("lastname"));
+						ex.setText(rs.getString("experience"));
+						ch.setText(rs.getString("charge"));
+						cn.setText(rs.getString("contNo"));
+						aaa.setText(rs.getString("loc"));
+						count=1;
+					
+						
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Sorry data not found");
+						fname.setText("");
+						lname.setText("");
+						ex.setText("");
+						ch.setText("");
+						cn.setText("");
+						aaa.setText("");
+						//servicename.requestFocus();
+						
+						
+					}
+				}catch(Exception e1)
+				{
+					e1.printStackTrace();
+				}
+				}
+			
+			}
+		});
+		btnNewButton.setBackground(new Color(0, 255, 255));
+		btnNewButton.setFont(new Font("Sitka Text", Font.PLAIN, 24));
+		btnNewButton.setBounds(294, 72, 114, 31);
+		contentPane.add(btnNewButton);
+		
+		JButton feedback = new JButton("Click here for 'Feedback'");
+		feedback.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(count==1)
+				{
+					new feedback();
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Please take service first"); 
+				}
+			}
+		});
+		feedback.setBackground(new Color(128, 255, 255));
+		feedback.setFont(new Font("Sylfaen", Font.PLAIN, 17));
+		feedback.setBounds(157, 260, 239, 31);
+		contentPane.add(feedback);
+		
+		
+		
+	
+		setVisible(true);
+	}
+}

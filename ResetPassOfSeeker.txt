@@ -1,0 +1,137 @@
+package all_service_here;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.awt.event.ActionEvent;
+
+public class Seekerforgetpass extends JFrame {
+
+	private JPanel contentPane;
+	private JPasswordField repass;
+	private JPasswordField pass;
+	private JTextField us;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Seekerforgetpass frame = new Seekerforgetpass();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Seekerforgetpass() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 326);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 128, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 255, 255));
+		panel.setBounds(10, 11, 414, 55);
+		contentPane.add(panel);
+		
+		JLabel lblNewLabel = new JLabel("Create New Password");
+		lblNewLabel.setFont(new Font("Lucida Bright", Font.PLAIN, 25));
+		panel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("User name");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_1.setBounds(10, 101, 78, 14);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("New Password");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_2.setBounds(10, 142, 105, 21);
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("Confirm Password");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_3.setBounds(10, 192, 141, 14);
+		contentPane.add(lblNewLabel_3);
+		
+		repass = new JPasswordField();
+		repass.setBounds(162, 186, 200, 31);
+		contentPane.add(repass);
+		
+		pass = new JPasswordField();
+		pass.setBounds(162, 139, 200, 31);
+		contentPane.add(pass);
+		
+		us = new JTextField();
+		us.setBounds(162, 89, 200, 31);
+		contentPane.add(us);
+		us.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Create Password");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/project","root","shalu");
+					String query = "update register set uname='"+us.getText()+"',password='"+pass.getText()+"',re_pass='"+repass.getText()+"' where uname='"+us.getText()+"'";
+					if(us.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,"Please Enter User name");
+					}
+					else if(pass.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter Password");
+					}
+					else if(repass.getText().equals("")) {
+						JOptionPane.showMessageDialog(null,"Please enter Confirm Password");
+					}
+					else if(!(pass.getText().equals(repass.getText()))) {
+						JOptionPane.showMessageDialog(null,"Please enter correct Confirm password");
+					}
+				
+				PreparedStatement ps = c.prepareStatement(query);
+				if((!(us.getText().equals("")))  && (!(pass.getText().equals("")))&&(pass.getText().equals(repass.getText()) &&(!(repass.getText().equals("")))))
+				{ 
+					ps.execute();
+				   JOptionPane.showMessageDialog(null, "Password update succesfullly");
+				  
+		    	}
+				
+				ps.close();
+					
+					
+				}catch(Exception e1){
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton.setBackground(new Color(0, 255, 255));
+		btnNewButton.setFont(new Font("Sitka Text", Font.PLAIN, 15));
+		btnNewButton.setBounds(143, 245, 167, 31);
+		contentPane.add(btnNewButton);
+		setVisible(true);
+	}
+}

@@ -1,0 +1,100 @@
+package all_service_here;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
+import javax.swing.border.TitledBorder;
+
+public class showprofile extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textField;
+	private JTextField textField_1;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					showprofile frame = new showprofile();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public showprofile() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 128, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(64, 0, 64));
+		panel.setBorder(new TitledBorder(null, "JPanel title", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBounds(127, 0, 193, 51);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("My Profile");
+		lblNewLabel.setFont(new Font("Rockwell", Font.PLAIN, 30));
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setBounds(26, 0, 155, 45);
+		panel.add(lblNewLabel);
+		
+		JButton btnNewButton = new JButton("Update");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new updateprofile();
+			}
+		});
+		btnNewButton.setBackground(new Color(0, 255, 255));
+		btnNewButton.setFont(new Font("Serif", Font.PLAIN, 32));
+		btnNewButton.setBounds(127, 192, 140, 40);
+		contentPane.add(btnNewButton);
+		
+		JLabel lblNewLabel_2 = new JLabel("Choose any one -:");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_2.setBounds(20, 96, 193, 23);
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_1 = new JLabel("Do you want to delete or update profile");
+		lblNewLabel_1.setBounds(20, 62, 357, 23);
+		contentPane.add(lblNewLabel_1);
+		lblNewLabel_1.setFont(new Font("Sitka Text", Font.PLAIN, 18));
+		JButton view = new JButton("Delete");
+		view.setBackground(new Color(0, 255, 255));
+		view.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new deleteprofile();
+			}
+		});
+		view.setFont(new Font("Serif", Font.PLAIN, 32));
+		view.setBounds(127, 130, 140, 40);
+		contentPane.add(view);
+		
+				setVisible(true);
+	
+	}
+}
